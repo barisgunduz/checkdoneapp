@@ -1,9 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import HomeScreen from "../screens/HomeScreen"
 import PremiumScreen from "../screens/PremiumScreen"
-import { Text } from "react-native"
 import CalendarScreen from "../screens/CalendarScreen"
 import SettingsScreen from "../screens/SettingsScreen"
+import { colors } from "../theme/colors"
 
 const Drawer = createDrawerNavigator()
 
@@ -12,11 +12,31 @@ export default function DrawerNavigator() {
         <Drawer.Navigator
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: "#000",
+                    backgroundColor: colors.bg,
                 },
-                headerTintColor: "#fff",
+                headerTintColor: colors.text,
                 headerTitleStyle: {
                     fontWeight: "600",
+                },
+
+                drawerStyle: {
+                    backgroundColor: colors.bg,
+                    width: 260,
+                },
+
+                drawerActiveBackgroundColor: colors.card,
+                drawerActiveTintColor: colors.text,
+                drawerInactiveTintColor: colors.subtext,
+
+                drawerLabelStyle: {
+                    fontSize: 15,
+                    marginLeft: -8,
+                },
+
+                drawerItemStyle: {
+                    borderRadius: 12,
+                    marginHorizontal: 8,
+                    marginVertical: 4,
                 },
             }}
         >
