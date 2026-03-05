@@ -1,31 +1,37 @@
+
 # ✅ Check Done Hub
 
-**Check Done Hub** is a minimal, fast, and distraction-free todo application designed to help you track your daily tasks with clarity and focus.
+**Check Done Hub** is a fast, focused, and distraction‑free task manager built to help you finish your daily tasks with clarity.
 
-Built with **React Native (Expo)**, the app provides a clean dark interface, smooth UX, and a simple workflow so you can add, complete, and manage your tasks in seconds.
+Designed with a **minimal dark interface** and smooth UX, the app removes noise and keeps you focused on one thing only: completing tasks.
+
+Built with **React Native (Expo + TypeScript)** and powered by local storage, it works fully offline with instant interactions.
 
 ---
 
 ## ✨ Core Philosophy
 
-- ⚡ Fast interaction
-- 🎯 Focus on completion, not complexity
-- 🌙 Clean minimal dark UI
-- 🧠 Zero cognitive overload
+- ⚡ Fast interaction  
+- 🎯 Focus on completion, not complexity  
+- 🌙 Clean minimal dark UI  
+- 🧠 Zero cognitive overload  
 
-No unnecessary features. Just tasks and progress.
+No clutter. Just tasks and progress.
 
 ---
 
 ## 📱 How It Works
 
-1. Tap the **➕ button** to add a new task  
-2. Start typing immediately (auto-focus enabled)  
-3. Tap a task to mark it as **completed**  
-4. Track your progress with the **completion progress bar**  
-5. Delete tasks with the **trash icon**
+1. Tap the **➕ button** to add a task  
+2. Start typing instantly (auto‑focus)  
+3. Optionally add:
+   - category  
+   - reminder date & time  
+4. Tap a task to mark it as **completed**  
+5. Track your progress with the **daily progress bar**  
+6. View tasks by day in the **calendar screen**
 
-The progress bar fills as you complete tasks, giving you a visual sense of productivity.
+Completed tasks stay visible for the day and are automatically hidden from the main list the next day (Premium).
 
 ---
 
@@ -33,9 +39,20 @@ The progress bar fills as you complete tasks, giving you a visual sense of produ
 
 The progress bar represents:
 
-completed tasks / total tasks
+**completed tasks today / active tasks today**
 
-The more tasks you finish, the more the bar fills.
+Only visible tasks are counted, keeping progress meaningful and daily‑focused.
+
+---
+
+## 📅 Calendar Integration
+
+- Daily task grouping  
+- Visual date markers for task activity  
+- Quick add for selected day  
+- Past task history (Premium)  
+- Future planning (Premium)  
+- Current‑month limit for Free users  
 
 ---
 
@@ -43,112 +60,124 @@ The more tasks you finish, the more the bar fills.
 
 ### Free Plan
 
-- Maximum **20 total tasks**
-- Add / delete / complete tasks
-- Progress tracking
-- Clean minimal UI
-- Paywall prompt when limit is reached
+- Maximum **20 total tasks**  
+- Add / delete / complete tasks  
+- Categories  
+- Reminders  
+- Calendar (current month)  
+- Progress tracking  
+- Clean minimal UI  
 
-If you have more than 20 tasks from a previous premium period, you can still view and complete them, but you cannot add new ones until you:
-
-- delete tasks, or  
-- upgrade to Premium  
+If you exceed 20 tasks during a Premium period, you can still view and complete them, but cannot add new ones until you delete tasks or upgrade again.
 
 ---
 
 ### Premium Plan
 
-- Unlimited tasks
-- No task limit
-- Designed for future:
-  - reminders
-  - categories
-  - advanced productivity features
-  - ad-free experience
+- Unlimited tasks  
+- Full calendar navigation (past & future)  
+- Task history archive  
+- Future task planning  
+- Automatic daily list cleanup  
+- Productivity‑focused workflow  
 
-Premium status is persisted locally and remains active after app restarts.
+Premium is stored locally and uses a **30‑day duration system** with:
 
----
+- start date  
+- renewal date  
+- remaining days  
 
-## 🧱 Current Feature Set (v1.1)
-
-- Local task storage (AsyncStorage)
-- Add / delete / complete tasks
-- Auto-focus task input modal
-- Completion-based progress bar
-- Free task limit (20 total tasks)
-- Premium mode with unlimited tasks
-- Paywall alert and Premium screen
-- Premium state persistence
-- Clean dark minimal UI
-- Green checkmark for completed tasks
-- Trash icon delete action
-- Edge-case handling (premium → free downgrade)
+A **promo code system** allows temporary Premium access.
 
 ---
 
-## 🧩 Tech Stack
+## ⚙️ Settings & System Features
 
-- React Native (Expo)
-- TypeScript
-- AsyncStorage
-- React Context API
-- React Navigation
-- Expo Vector Icons
-
----
-
-## 🚀 Roadmap
-
-### v1.2
-AdMob banner (free users only)
-
-### v1.3
-In-App Purchase integration
-
-### v1.4
-Premium features
-- Categories
-- Reminders (local notifications)
-- Streak tracking
-
-### v2.0
-Firebase sync  
-Multi-device support  
-Chrome extension integration
+- Premium status panel  
+- Notification permission status  
+- Version display  
+- Language selector (TR / EN – UI ready)  
+- Developer reset tools (dev builds)
 
 ---
 
-## 📌 Version History
+## 🧭 Navigation
 
-### v1.0 – Core Foundation
+Drawer navigation with:
 
-- Basic todo functionality
-- Premium infrastructure
-- Feature gating
-- Persistent state
+- Task List  
+- Calendar  
+- Settings  
+- Premium  
 
-### v1.1 – UI & UX Polish
+Consistent dark theme across all screens.
 
-- Minimal dark theme
-- Progress bar rework (completion-based)
-- Autofocus input modal
-- Tick + trash icons
-- Correct free limit logic (total tasks)
-- Premium downgrade handling
+---
+
+## 🧱 Tech Stack
+
+- React Native (Expo Dev Client)  
+- TypeScript  
+- AsyncStorage (offline persistence)  
+- React Context API  
+- React Navigation (Stack + Drawer)  
+- React Native Calendars  
+- Expo Notifications (local reminders)  
+- Expo Vector Icons  
+
+---
+
+## 📦 Current Feature Set
+
+- Local task storage  
+- Add / delete / complete tasks  
+- Category support  
+- Reminder date & time picker  
+- Daily progress bar  
+- Calendar with date markers  
+- Task filtering by selected day  
+- Free task limit (20 total)  
+- Premium unlimited mode  
+- Premium duration engine (30 days)  
+- Promo code activation  
+- Automatic premium expiry handling  
+- Premium auto‑hide completed tasks (daily)  
+- Paywall alerts and upgrade flow  
+- Settings screen with system info  
+- Clean minimal dark UI  
+- Drawer navigation  
+
+---
+
+## 🚀 Product Direction
+
+Check Done Hub is evolving into a **focused execution tool**, not a complex planner.
+
+Future direction includes:
+
+- intelligent task ordering  
+- enhanced category management  
+- multilingual support  
+- notification controls  
+- in‑app purchases  
+- onboarding flow  
+- productivity analytics  
+
+The goal is to keep the interface minimal while adding depth through behavior‑based productivity features.
 
 ---
 
 ## 🎯 Vision
 
-Check Done Hub aims to become a fast, focused productivity tool that removes friction from daily task tracking while offering powerful premium features for users who want more control and insights.
+Most todo apps optimize for organizing.  
+**Check Done Hub optimizes for finishing.**
 
 No clutter. Just getting things done.
 
 ---
 
-## 💡 Support & Sponsorship
+## ☕ Support
 
-If you find this project useful, consider supporting me! 😊
+If you find this project useful, consider supporting:
 
 [![Buy me coffee](https://barisgunduz.com/demo/buymeacoffee/buymeacoffee.png)](https://buymeacoffee.com/barisgunduz)
