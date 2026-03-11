@@ -10,6 +10,7 @@ import { usePremium } from "../context/PremiumContext"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { RootStackParamList } from "../types/navigation"
+import { useTranslation } from "../context/LanguageContext"
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Main">
 
@@ -18,6 +19,7 @@ export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false)
     const { isPremium } = usePremium()
     const navigation = useNavigation<NavigationProp>()
+    const { t } = useTranslation()
 
     // Premium auto-hide
     const visibleTasks = useMemo(() => {
@@ -46,13 +48,13 @@ export default function HomeScreen() {
 
         if (!isPremium && totalCount >= 20) {
             Alert.alert(
-                "Limit doldu",
+                t("home.limit.title"),
                 totalCount > 20
-                    ? "20’den fazla görevin var. Yeni görev eklemek için bazılarını sil veya Premium’a geç."
-                    : "Free plan ile maksimum 20 görev ekleyebilirsin. Sınırsız görev için Premium’a geç.",
+                    ? t("home.limit.over")
+                    : t("home.limit.max"),
                 [
-                    { text: "Tamam", style: "cancel" },
-                    { text: "Premium Ol", onPress: () => navigation.navigate("Premium") },
+                    { text: t("common.ok"), style: "cancel" },
+                    { text: t("common.premiumUpgrade"), onPress: () => navigation.navigate("Premium") },
                 ]
             )
             return
@@ -63,16 +65,18 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
-            <Text style={styles.title}>Bugünün Görevleri</Text>
+            <Text style={styles.title}>{t("home.title")}</Text>
 
             <Text style={styles.counter}>
-                {isPremium ? `${totalCount} görev` : `${totalCount}/20 görev`}
+                {isPremium
+                    ? t("home.counterPremium", { params: { count: totalCount } })
+                    : t("home.counterFree", { params: { count: totalCount } })}
             </Text>
 
             <ProgressBar completed={completedCount} total={totalCount} />
 
             {tasks.length === 0 && (
-                <Text style={styles.empty}>Başlamak için bir görev ekle 🚀</Text>
+                <Text style={styles.empty}>{t("home.empty")}</Text>
             )}
 
             <FlatList

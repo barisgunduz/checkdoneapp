@@ -27,6 +27,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { RootStackParamList } from "../types/navigation"
+import { useTranslation } from "../context/LanguageContext"
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Main">
 
@@ -94,6 +95,7 @@ export default function HabitTrackerScreen() {
     const [reminderId, setReminderId] = useState<string | null>(null)
     const navigation = useNavigation<NavigationProp>()
     const { isPremium } = usePremium()
+    const { t } = useTranslation()
 
     // Initial load
     useEffect(() => {
@@ -156,8 +158,8 @@ export default function HabitTrackerScreen() {
 
         const id = await Notifications.scheduleNotificationAsync({
             content: {
-                title: "Alışkanlıklarını tamamla",
-                body: "Bugün hâlâ tamamlanmamış alışkanlıkların var. Serini sürdür!",
+                title: t("habits.reminder.title"),
+                body: t("habits.reminder.body"),
             },
             trigger: {
                 type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -211,16 +213,16 @@ export default function HabitTrackerScreen() {
 
         if (habits.length >= maxHabits) {
             Alert.alert(
-                "Limit doldu",
+                t("habits.limit.title"),
                 isPremium
-                    ? "20 alışkanlık sınırına ulaştın. Yeni bir tane eklemek için birini sil."
-                    : "Free planda en fazla 10 alışkanlık ekleyebilirsin. Daha fazlası için Premium’a geç.",
+                    ? t("habits.limit.cap")
+                    : t("habits.limit.max"),
                 isPremium
-                    ? [{ text: "Tamam" }]
+                    ? [{ text: t("common.ok") }]
                     : [
-                        { text: "Vazgeç", style: "cancel" },
+                        { text: t("common.cancel"), style: "cancel" },
                         {
-                            text: "Premium Ol",
+                            text: t("common.premiumUpgrade"),
                             onPress: () => navigation.navigate("Premium"),
                         },
                     ]
@@ -243,14 +245,16 @@ export default function HabitTrackerScreen() {
 
     return (
         <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
-            <Text style={styles.title}>Bugünün Alışkanlıkları</Text>
+            <Text style={styles.title}>{t("habits.title")}</Text>
             <Text style={styles.counter}>
-                {completedToday} / {total} tamamlandı · %{progressPercent}
+                {t("habits.counter", {
+                    params: { completed: completedToday, total, percent: progressPercent },
+                })}
             </Text>
             <ProgressBar completed={completedToday} total={Math.max(total, 1)} />
 
             {habits.length === 0 && (
-                <Text style={styles.empty}>Alışkanlık ekleyerek başla 🚀</Text>
+                <Text style={styles.empty}>{t("habits.empty")}</Text>
             )}
 
             <FlatList
@@ -278,7 +282,9 @@ export default function HabitTrackerScreen() {
                             {isPremium && (
                                 <View style={styles.streakBox}>
                                     <Text style={styles.streakText}>
-                                        Seri {streak.current} / En iyi {streak.best}
+                                        {t("habits.streak", {
+                                            params: { current: streak.current, best: streak.best },
+                                        })}
                                     </Text>
                                 </View>
                             )}
@@ -294,9 +300,9 @@ export default function HabitTrackerScreen() {
             <Modal visible={modalVisible} animationType="slide" transparent>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Yeni Alışkanlık</Text>
+                        <Text style={styles.modalTitle}>{t("habits.modal.title")}</Text>
                         <TextInput
-                            placeholder="Örn. Meditasyon"
+                            placeholder={t("habits.modal.placeholder")}
                             placeholderTextColor={colors.subtext}
                             style={styles.input}
                             value={newTitle}
@@ -307,7 +313,7 @@ export default function HabitTrackerScreen() {
                         />
 
                         <TouchableOpacity style={styles.addButton} onPress={handleAddHabit}>
-                            <Text style={styles.addButtonText}>Ekle</Text>
+                            <Text style={styles.addButtonText}>{t("common.add")}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -316,7 +322,7 @@ export default function HabitTrackerScreen() {
                                 setNewTitle("")
                             }}
                         >
-                            <Text style={styles.cancel}>Vazgeç</Text>
+                            <Text style={styles.cancel}>{t("common.cancel")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

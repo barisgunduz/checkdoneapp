@@ -14,7 +14,8 @@ import DateTimePicker, {
     DateTimePickerEvent,
 } from "@react-native-community/datetimepicker"
 import { colors } from "../theme/colors"
-import { DEFAULT_CATEGORIES } from "../constants/categories"
+import { DEFAULT_CATEGORIES, CategoryKey } from "../constants/categories"
+import { useTranslation } from "../context/LanguageContext"
 
 type Props = {
     visible: boolean
@@ -35,11 +36,12 @@ export default function AddTaskModal({
 }: Props) {
     const [title, setTitle] = useState("")
     const [selectedCategory, setSelectedCategory] = useState<
-        string | undefined
+        CategoryKey | undefined
     >()
     const [reminderDate, setReminderDate] = useState<Date | undefined>()
     const [showPicker, setShowPicker] = useState(false)
     const inputRef = useRef<TextInput>(null)
+    const { t } = useTranslation()
 
     useEffect(() => {
         if (visible) {
@@ -92,7 +94,7 @@ export default function AddTaskModal({
                         <View style={styles.inputRow}>
                             <TextInput
                                 ref={inputRef}
-                                placeholder="Yeni görev"
+                                placeholder={t("addTask.placeholder")}
                                 placeholderTextColor={colors.subtext}
                                 value={title}
                                 onChangeText={setTitle}
@@ -141,7 +143,7 @@ export default function AddTaskModal({
                                     onPress={() => setShowPicker(false)}
                                 >
                                     <Text style={styles.pickerDoneText}>
-                                        Onayla
+                                        {t("common.confirm")}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
@@ -163,10 +165,10 @@ export default function AddTaskModal({
                                         style={[
                                             styles.categoryText,
                                             selectedCategory === cat &&
-                                            styles.categoryTextActive,
-                                        ]}
-                                    >
-                                        {cat}
+                                        styles.categoryTextActive,
+                                    ]}
+                                >
+                                        {t(`categories.${cat}`)}
                                     </Text>
                                 </TouchableOpacity>
                             ))}
@@ -177,11 +179,11 @@ export default function AddTaskModal({
                             style={styles.button}
                             onPress={handleAdd}
                         >
-                            <Text style={{ color: "#000" }}>Ekle</Text>
+                            <Text style={{ color: "#000" }}>{t("addTask.save")}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={onClose}>
-                            <Text style={styles.cancel}>Vazgeç</Text>
+                            <Text style={styles.cancel}>{t("common.cancel")}</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

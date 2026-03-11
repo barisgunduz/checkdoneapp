@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Task } from "../types/task"
 import { colors } from "../theme/colors"
 import { Ionicons } from "@expo/vector-icons"
+import { useTranslation } from "../context/LanguageContext"
 
 type Props = {
     task: Task
@@ -10,6 +11,8 @@ type Props = {
 }
 
 export default function TaskItem({ task, onToggle, onDelete }: Props) {
+    const { t } = useTranslation()
+
     const getReminderColor = () => {
         if (!task.reminderDate) return colors.subtext
 
@@ -44,7 +47,9 @@ export default function TaskItem({ task, onToggle, onDelete }: Props) {
                     </Text>
 
                     {task.category && (
-                        <Text style={styles.categoryLabel}>{task.category}</Text>
+                        <Text style={styles.categoryLabel}>
+                            {t(`categories.${task.category}`, { fallback: task.category })}
+                        </Text>
                     )}
 
                     {task.reminderDate && (

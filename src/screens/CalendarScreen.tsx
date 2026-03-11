@@ -17,6 +17,7 @@ import { RootStackParamList } from "../types/navigation"
 import { useTasks } from "../context/TaskContext"
 import TaskItem from "../components/TaskItem"
 import AddTaskModal from "../components/AddTaskModal"
+import { useTranslation } from "../context/LanguageContext"
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>
 
@@ -24,6 +25,7 @@ export default function CalendarScreen() {
     const { isPremium } = usePremium()
     const { tasks, toggleTask, deleteTask, addTask } = useTasks()
     const navigation = useNavigation<NavigationProp>()
+    const { t } = useTranslation()
 
     const today = new Date().toISOString().split("T")[0]
 
@@ -33,12 +35,12 @@ export default function CalendarScreen() {
 
     const showPremiumAlert = () => {
         Alert.alert(
-            "Premium Gerekli",
-            "Farklı aylara bakmak için Premium’a geç.",
+            t("calendar.premiumRequired.title"),
+            t("calendar.premiumRequired.message"),
             [
-                { text: "Vazgeç", style: "cancel" },
+                { text: t("common.cancel"), style: "cancel" },
                 {
-                    text: "Premium Ol",
+                    text: t("common.premiumUpgrade"),
                     onPress: () => navigation.navigate("Premium"),
                 },
             ]
@@ -121,7 +123,7 @@ export default function CalendarScreen() {
         reminderDate?: string
     ) => {
         if (selectedDate < today) {
-            Alert.alert("Hata", "Geçmiş tarihe görev ekleyemezsin.")
+            Alert.alert(t("calendar.error.title"), t("calendar.error.past"))
             return
         }
 
@@ -167,7 +169,7 @@ export default function CalendarScreen() {
             {/* 📋 Seçilen günün görevleri */}
             <View style={styles.listContainer}>
                 <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Görevler</Text>
+                    <Text style={styles.sectionTitle}>{t("calendar.tasksTitle")}</Text>
 
                     {/* ➕ Takvim + buton */}
                     <TouchableOpacity
@@ -175,8 +177,8 @@ export default function CalendarScreen() {
                         onPress={() => {
                             if (selectedDate < today) {
                                 Alert.alert(
-                                    "Hata",
-                                    "Geçmiş tarihe görev ekleyemezsin."
+                                    t("calendar.error.title"),
+                                    t("calendar.error.past")
                                 )
                                 return
                             }
@@ -188,7 +190,7 @@ export default function CalendarScreen() {
                 </View>
 
                 {selectedDayTasks.length === 0 ? (
-                    <Text style={styles.emptyText}>Bu gün için görev yok</Text>
+                    <Text style={styles.emptyText}>{t("calendar.empty")}</Text>
                 ) : (
                     <FlatList
                         data={selectedDayTasks}

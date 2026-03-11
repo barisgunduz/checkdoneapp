@@ -9,6 +9,7 @@ import PremiumScreen from "./src/screens/PremiumScreen"
 import { RootStackParamList } from "./src/types/navigation"
 import * as Notifications from "expo-notifications"
 import DrawerNavigator from "./src/navigation/DrawerNavigator"
+import { LanguageProvider } from "./src/context/LanguageContext"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -23,20 +24,18 @@ Notifications.setNotificationHandler({
 })
 
 export default function App() {
-  useEffect(() => {
-    Notifications.requestPermissionsAsync()
-  }, [])
-
   return (
-    <PremiumProvider>
-      <TaskProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Main" component={DrawerNavigator} />
-            <Stack.Screen name="Premium" component={PremiumScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </TaskProvider>
-    </PremiumProvider>
+    <LanguageProvider>
+      <PremiumProvider>
+        <TaskProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Main" component={DrawerNavigator} />
+              <Stack.Screen name="Premium" component={PremiumScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </TaskProvider>
+      </PremiumProvider>
+    </LanguageProvider>
   )
 }

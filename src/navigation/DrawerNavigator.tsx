@@ -11,10 +11,13 @@ import CalendarScreen from "../screens/CalendarScreen"
 import SettingsScreen from "../screens/SettingsScreen"
 import HabitTrackerScreen from "../screens/HabitTrackerScreen"
 import { colors } from "../theme/colors"
+import { useTranslation } from "../context/LanguageContext"
 
 const Drawer = createDrawerNavigator()
 
 export default function DrawerNavigator() {
+    const { t } = useTranslation()
+
     return (
         <Drawer.Navigator
             drawerContent={props => <CustomDrawerContent {...props} />}
@@ -48,11 +51,31 @@ export default function DrawerNavigator() {
                 },
             }}
         >
-            <Drawer.Screen name="Ana Liste" component={HomeScreen} />
-            <Drawer.Screen name="Takvim" component={CalendarScreen} />
-            <Drawer.Screen name="Günlük" component={HabitTrackerScreen} />
-            <Drawer.Screen name="Ayarlar" component={SettingsScreen} />
-            <Drawer.Screen name="Premium" component={PremiumScreen} />
+            <Drawer.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: t("drawer.home"), drawerLabel: t("drawer.home") }}
+            />
+            <Drawer.Screen
+                name="Calendar"
+                component={CalendarScreen}
+                options={{ title: t("drawer.calendar"), drawerLabel: t("drawer.calendar") }}
+            />
+            <Drawer.Screen
+                name="Habits"
+                component={HabitTrackerScreen}
+                options={{ title: t("drawer.habits"), drawerLabel: t("drawer.habits") }}
+            />
+            <Drawer.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{ title: t("drawer.settings"), drawerLabel: t("drawer.settings") }}
+            />
+            <Drawer.Screen
+                name="Premium"
+                component={PremiumScreen}
+                options={{ title: t("drawer.premium"), drawerLabel: t("drawer.premium") }}
+            />
         </Drawer.Navigator>
     )
 }

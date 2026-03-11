@@ -3,6 +3,8 @@ import { Task } from "../types/task"
 import { loadTasks, saveTasks } from "../services/storage"
 import { v4 as uuidv4 } from "uuid"
 import * as Notifications from "expo-notifications"
+import { useTranslation } from "./LanguageContext"
+import { Alert } from "react-native"
 
 type TaskContextType = {
     tasks: Task[]
@@ -19,6 +21,7 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined)
 
 export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     const [tasks, setTasks] = useState<Task[]>([])
+    const { t } = useTranslation()
 
     useEffect(() => {
         loadTasks().then(setTasks)
@@ -45,9 +48,19 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
         setTasks(prev => [newTask, ...prev])
 
         if (reminderDate) {
+            const granted = await ensureNotificationPermission()
+
+            if (!granted) {
+                Alert.alert(
+                    t("notifications.permission.deniedTitle"),
+                    t("notifications.permission.deniedMessage")
+                )
+                return
+            }
+
             await Notifications.scheduleNotificationAsync({
                 content: {
-                    title: "Görev zamanı",
+                    title: t("notifications.taskReminder.title"),
                     body: title,
                 },
                 trigger: {
@@ -89,6 +102,14 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
             {children}
         </TaskContext.Provider>
     )
+}
+
+const ensureNotificationPermission = async () => {
+    const current = await Notifications.getPermissionsAsync()
+    if (current.status === "granted") return true
+
+    const requested = await Notifications.requestPermissionsAsync()
+    return requested.status === "granted"
 }
 
 export const useTasks = () => {
